@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { View, StyleSheet,Text, TextInput, TouchableOpacity} from 'react-native';
 
 class Main extends Component {
+  static navigationOptions = {
+        title: 'Chatter', };
+
 	state = { name: '' }
-	onPress = () => { this.props.navigation.navigate('Chat', { name: this.state.name} ); }
+	onPress = () => this.props.navigation.navigate('Chat', { name: this.state.name} );
 	onChangeText = name => this.setState({name});
 
 	render() {
