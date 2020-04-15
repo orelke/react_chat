@@ -20,7 +20,7 @@ class Chat extends Component {
   get user() {
     return {
       name: this.props.navigation.state.params.name,
-      _id: Fire.shared.uid,
+      _id: Fire.uid,
     };
   }
 
@@ -28,7 +28,7 @@ class Chat extends Component {
     return (
 	    <GiftedChat
 	    messages={this.state.messages}
-	    onSend={Fire.shared.send}
+	    onSend={Fire.send}
 	    user={this.user}
 	    />
     );
@@ -36,7 +36,7 @@ class Chat extends Component {
 
 
   componentDidMount() {
-    Fire.shared.on(message => 
+    Fire.on(message => 
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, message),
       }))
@@ -44,7 +44,7 @@ class Chat extends Component {
   }
 
   componentWillUnmount() {
-    Fire.shared.off();
+    Fire.off();
   }
 }
 

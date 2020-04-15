@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import firebaseSDK from '../config/firebaseSDK';
+import Fire from '../Fire.js'
 
 export default class Login extends React.Component {
 	static navigationOptions = {
@@ -8,7 +8,7 @@ export default class Login extends React.Component {
 	};
 
 	state = {
-		name: 'Alice',
+		name: 'Your name',
 		email: 'test@live.com',
 		password: '123456',
 		avatar: ''
@@ -22,7 +22,7 @@ export default class Login extends React.Component {
 			avatar: this.state.avatar
 		};
 
-		const response = firebaseSDK.login(
+		const response = Fire.login(
 			user,
 			this.loginSuccess,
 			this.loginFailed
@@ -66,7 +66,6 @@ export default class Login extends React.Component {
 					style={styles.buttonText}
 					onPress={this.onPressLogin}
 				/>
-
 				<Button
 					title="Signup"
 					style={styles.buttonText}
