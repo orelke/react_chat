@@ -9,7 +9,7 @@ import {
 	ImageEditor
 } from 'react-native';
 
-import firebaseSDK from '../config/firebaseSDK';
+import Fire from '../Fire.js'
 
 export default class Signup extends React.Component {
 	state = {
@@ -26,7 +26,7 @@ export default class Signup extends React.Component {
 				email: this.state.email,
 				password: this.state.password
 			};
-			await firebaseSDK.createAccount(user);
+			await Fire.createAccount(user);
 		} catch ({ message }) {
 			console.log('create account failed. catch error:' + message);
 		}
@@ -75,9 +75,9 @@ export default class Signup extends React.Component {
 						() => reject()
 					);
 				});
-				let uploadUrl = await firebaseSDK.uploadImage(resizedUri);
+				let uploadUrl = await Fire.uploadImage(resizedUri);
 				this.setState({ avatar: uploadUrl });
-				await firebaseSDK.updateAvatar(uploadUrl);
+				await Fire.updateAvatar(uploadUrl);
 			}
 		} catch (err) {
 			console.log('onImageUpload error:' + err.message);
