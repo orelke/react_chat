@@ -8,7 +8,6 @@ export default class Login extends React.Component {
 	};
 
 	state = {
-		name: 'Your name',
 		email: 'test@live.com',
 		password: '123456',
 		avatar: ''
@@ -16,7 +15,6 @@ export default class Login extends React.Component {
 
 	onPressLogin = async () => {
 		const user = {
-			name: this.state.name,
 			email: this.state.email,
 			password: this.state.password,
 			avatar: this.state.avatar
@@ -32,7 +30,6 @@ export default class Login extends React.Component {
 	loginSuccess = () => {
 		console.log('login successful, navigate to chat.');
 		this.props.navigation.navigate('Chat', {
-			name: this.state.name,
 			email: this.state.email,
 			avatar: this.state.avatar
 		});

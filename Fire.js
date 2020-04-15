@@ -2,16 +2,18 @@ import  firebase from 'firebase';
 
 //import { firebase } from '@firebase/app';
 class Fire {
-    constructor() {
+     constructor() {
+    
       if (!firebase.apps.length) {
         //avoid re-initializing
         firebase.initializeApp({
-          apiKey: 'AIzaSyDCEEGqkT3ZlGDFimXshK8_43M2zOQQSPc',
-          authDomain: '<your-auth-domain>',
-          databaseURL: 'https://<your-db-url>.firebaseio.com',
-          projectId: '<your-project-id>',
-          storageBucket: '<your-storage-bucket>.appspot.com',
-          messagingSenderId: '<your-sender-id>'
+         apiKey: "AIzaSyDCEEGqkT3ZlGDFimXshK8_43M2zOQQSPc",
+         authDomain: "my-expo-chat.firebaseapp.com",
+         databaseURL: "https://my-expo-chat.firebaseio.com",
+         projectId: "my-expo-chat",
+         storageBucket: "my-expo-chat.appspot.com",
+         messagingSenderId: "105188356120",
+         appId: "1:105188356120:web:1a55a09f542f56a3ae536d"
         });
       }
     };
@@ -34,12 +36,19 @@ class Fire {
                 user.name
             );
             var userf = firebase.auth().currentUser;
+            var user_id = firebase.auth().currentUser.uid;
+
+            var store_ref = firebase.firestore().collection('Users').doc("user_id").set({user_id : user.name}).then(function() {
+            console.log("Document successfully written!");
+            })
+            .catch(function(error) {
+            console.error("Error writing document: ", error);
+            });
+            
             userf.updateProfile({ displayName: user.name }).then(
-              function() {
+              function(){
                 console.log('Updated displayName successfully. name:' + user.name);
-                alert(
-                  'User ' + user.name + ' was created successfully. Please login.'
-                );
+                alert('User ' + user.name + ' was created successfully. Please login.');
               },
               function(error) {
                 console.warn('Error update displayName.');
@@ -51,6 +60,7 @@ class Fire {
             alert('Create account failed. Error: ' + error.message);
           }
         );
+
     };
     
     uploadImage = async uri => {
@@ -104,6 +114,12 @@ class Fire {
     return firebase.database().ref('messages');
   }
 
+  get storeRef() {
+    return firebase.firestore().collection('Users');
+  }
+
+ 
+
   parse = snapshot => {
     const { timestamp: numberStamp, text, user } = snapshot.val(); //destructuring
     const { key: _id } = snapshot;
@@ -127,17 +143,15 @@ class Fire {
 
 }
 
-
-
   send = messages => {
     for (let i = 0; i < messages.length; i++) {
       const { text, user } = messages[i];
-      console.log("ddd");
       const message = {
         text,
-        user,  
+        user,                        //dont recognize this var: user it is undifined 
         timestamp: this.timestamp,
       };
+      console.log(message)
       this.append(message);
     }
   };

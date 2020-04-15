@@ -1,5 +1,6 @@
 import React from 'react';
-import { ImagePicker, Permissions } from 'expo';
+import { ImagePicker } from 'expo';
+import * as Permissions from 'expo-permissions';
 import {
 	StyleSheet,
 	Text,
