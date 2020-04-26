@@ -13,13 +13,12 @@ class Chat extends Component {
   });
 
 
-  
   state = {
    user : this.user,
    messages: [],
   };
 
-  toggleUser = (new_name) => {this.setState({user: new_name});  }
+  // toggleUser = (new_name) => {this.setState({user: new_name});  }
 
 
   get user() {
@@ -34,10 +33,8 @@ class Chat extends Component {
   get user_name(){
     var users_db = Fire.storeRef
     var docRef = users_db.doc(Fire.uid);
-    console.log(docRef)
-    docRef.get().then(function(doc) {
+    var res = docRef.get().then(function(doc) {
     if (doc.exists) {
-        //toggleUser(doc.data()["user_name"])
         console.log("Document data:", doc.data());
                return doc.data()["user_name"]
     } else {
@@ -46,7 +43,7 @@ class Chat extends Component {
     }}).catch(function(error) {
     console.log("Error getting document:", error);
 });
-
+  return res
   }
 
 
@@ -54,10 +51,7 @@ class Chat extends Component {
     return (
 	    <GiftedChat
       messages={this.state.messages}
-      user={{
-      name:"nitsan",
-      _id: Fire.uid,
-    }}
+      user={this.user}
 	    onSend={Fire.send}
       renderUsernameOnMessage={true}
 	    />

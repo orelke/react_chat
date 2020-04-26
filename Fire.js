@@ -151,7 +151,6 @@ class Fire {
         user,                        //dont recognize this var: user it is undifined 
         timestamp: this.timestamp,
       };
-      console.log(message)
       this.append(message);
     }
   };
