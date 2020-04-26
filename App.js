@@ -9,8 +9,8 @@ import {createAppContainer} from 'react-navigation';
 
 const navigator = createStackNavigator({
 	Login: { screen: Login },
-	Main: { screen: Main }, 
 	Signup: { screen: Signup },
+	Main: { screen: Main }, 
 	Chat: { screen: Chat },
 });
 

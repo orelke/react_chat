@@ -110,6 +110,9 @@ class Fire {
   get uid() {
     return ( firebase.auth().currentUser || {} ).uid;
   } 
+
+  get_group = group_id => {return firebase.database().ref(group_id) }
+
   get ref() {
     return firebase.database().ref('messages');
   }
