@@ -38,7 +38,7 @@ class Fire {
             var userf = firebase.auth().currentUser;
             var user_id = firebase.auth().currentUser.uid;
 
-            var store_ref = firebase.firestore().collection('Users').doc("user_id").set({user_id : user.name}).then(function() {
+            var store_ref = firebase.firestore().collection('Users').doc(user_id).set({user_name : user.name}).then(function() {
             console.log("Document successfully written!");
             })
             .catch(function(error) {

@@ -34,9 +34,10 @@ class Chat extends Component {
   get user_name(){
     var users_db = Fire.storeRef
     var docRef = users_db.doc(Fire.uid);
+    console.log(docRef)
     docRef.get().then(function(doc) {
     if (doc.exists) {
-        toggleUser(doc.data()["user_name"])
+        //toggleUser(doc.data()["user_name"])
         console.log("Document data:", doc.data());
                return doc.data()["user_name"]
     } else {
@@ -53,7 +54,10 @@ class Chat extends Component {
     return (
 	    <GiftedChat
       messages={this.state.messages}
-      user={this.state.user}
+      user={{
+      name:"nitsan",
+      _id: Fire.uid,
+    }}
 	    onSend={Fire.send}
       renderUsernameOnMessage={true}
 	    />
