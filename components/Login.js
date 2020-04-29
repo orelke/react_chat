@@ -29,7 +29,7 @@ export default class Login extends React.Component {
 
 	loginSuccess = () => {
 		console.log('login successful, navigate to chat.');
-		this.props.navigation.navigate('Chat', {
+		this.props.navigation.navigate('Main', {
 			email: this.state.email,
 			avatar: this.state.avatar
 		});

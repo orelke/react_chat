@@ -1,42 +1,32 @@
 import React, { Component } from 'react';
 import { View, StyleSheet,Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import Fire from '../Fire.js'
+import Add from './Add.js';
+
 class Main extends Component {
 
 	state = { name: '' ,
-              email: ''}
-
+			  email: '',
+			  value: ''};
+	
   static navigationOptions = ( {navigation } ) => ({
 	title: 'Chat!',
   });
 
 
-  createGroup = async () => {
-	const response = Fire.login(
-		user,
-		this.loginSuccess,
-		this.loginFailed
-	);
-};
+addFriend = () =>     (<TextInput
+      style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+      onChangeText={text => onChangeText(text)}
+      value={this.state.value}
+    />);
 
-addFriend = async () => {
-	const response = Fire.login(
-		user,
-		this.loginSuccess,
-		this.loginFailed
-	);
-};
 //TODO: press a button to a specific group
 	render() {
 		return(
 			<View>
 			<Text style={styles.title}> Hi {this.props.navigation.state.params.email} </Text>
 			<Text style={styles.data}> groups {this.props.navigation.state.params.email} </Text>
-			<Button
-					title="Add Friend"
-					style={styles.buttonText}
-					onPress={this.addFriend}
-				/>
+			<Add />
 			<Button
 					title="Create Group"
 					style={styles.buttonText}
