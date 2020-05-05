@@ -26,7 +26,13 @@ addFriend = () =>     (<TextInput
 			<View>
 			<Text style={styles.title}> Hi {this.props.navigation.state.params.email} </Text>
 			<Text style={styles.data}> groups {this.props.navigation.state.params.email} </Text>
-			<Add />
+            <Button
+					title="ADD FRIEND"
+					style={styles.buttonText}
+					onPress={() => this.props.navigation.navigate('ADD')}
+
+				/>
+
 			<Button
 					title="Create Group"
 					style={styles.buttonText}

@@ -4,6 +4,7 @@ import Main from './components/Main.js';
 import Chat from './components/Chat.js';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Add from './components/Add';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 
@@ -12,6 +13,7 @@ const navigator = createStackNavigator({
 	Signup: { screen: Signup },
 	Main: { screen: Main }, 
 	Chat: { screen: Chat },
+	ADD: {screen : Add}
 });
 
 
