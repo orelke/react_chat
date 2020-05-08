@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet,Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import Fire from '../Fire.js'
 import Add from './Add.js';
+import Group from './Group.js'
 
 class Main extends Component {
 
@@ -36,7 +37,7 @@ addFriend = () =>     (<TextInput
 			<Button
 					title="Create Group"
 					style={styles.buttonText}
-					onPress={this.createGroup}
+					onPress={() => this.props.navigation.navigate('Group')}
 				/>
 			</View>
 		);
