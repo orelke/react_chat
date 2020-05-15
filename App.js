@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Add from './components/Add';
 import Group from './components/Group'
+import Req from './components/Req';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 
@@ -14,8 +15,9 @@ const navigator = createStackNavigator({
 	Signup: { screen: Signup },
 	Main: { screen: Main }, 
 	Chat: { screen: Chat },
-	ADD: {screen : Add},
-	Group: {screen: Group}
+	Add: {screen : Add},
+	Group: {screen: Group},
+	Req:    {screen: Req}
 });
 
 
