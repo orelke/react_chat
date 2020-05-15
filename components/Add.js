@@ -3,6 +3,8 @@ import { View, Text, Button, StyleSheet} from 'react-native';
 import { Searchbar } from 'react-native-paper'
 import  firebase from 'firebase';
 
+import Consts from './Consts.js'
+
 export default class Add extends Component {
     constructor(props){
       super(props)
@@ -33,6 +35,7 @@ export default class Add extends Component {
         console.log(doc.id, ' => ', doc.get("user_name"), "MATCH!");
         this.setState({reciver_name: doc.get("user_name")})
         this.setState({reciver_id:doc.id})
+        return;
         }
     }
   });
@@ -40,17 +43,32 @@ export default class Add extends Component {
 
     }
 
+    check_status =  async () =>
+    {
+      var user_id = firebase.auth().currentUser.uid
+      var sender_doc = firebase.firestore().collection('Users').doc(user_id)
+      sender_doc.get().then((doc) => { 
+        if (doc.exists) {
+            console.log("Document data:", doc.get("sent_requests"));
+            var sent_req = doc.get("sent_requests");
+            if (sent_req[this.state.search]){
+              this.setState({already_sent_request: true});
+          }
+      }
+    });
+    }
+
 
     send_request = () =>
     {
-        var reciver_id = this.state.reciver_id
+        var reciver_id = this.state.reciver_id;
+        var name_str = this.state.search;
         var user_id = firebase.auth().currentUser.uid;
         var sender_doc_ref = firebase.firestore().collection('Users').doc(user_id)
-        sender_doc_ref.set({"sent_requests":{[reciver_id]: "TODO: add more info about request"}}, { merge: true })
+        sender_doc_ref.set({"sent_requests":{[name_str]: reciver_id}}, { merge: true })
         
         var reciver_doc_ref = firebase.firestore().collection('Users').doc(reciver_id)
-        reciver_doc_ref.set({"recived_requests":{[user_id]: "TODO: add more info about request"}}, { merge: true })
-
+        reciver_doc_ref.set({"recived_requests":{[name_str]: user_id}}, { merge: true })
     }
 
     cancel_request = () =>
@@ -58,10 +76,11 @@ export default class Add extends Component {
        var user_id = firebase.auth().currentUser.uid;
        var reciver_id = this.state.reciver_id
        var sender_doc_ref = firebase.firestore().collection('Users').doc(user_id)
-       sender_doc_ref.set({ "sent_requests" : {[reciver_id]: firebase.firestore.FieldValue.delete()}}, { merge: true });
+       sender_doc_ref.set({ "sent_requests" : {[this.state.search]: firebase.firestore.FieldValue.delete()}}, { merge: true });
        
        var reciver_doc_ref = firebase.firestore().collection('Users').doc(reciver_id)
-       reciver_doc_ref.set({ "recived_requests" : {[user_id]: firebase.firestore.FieldValue.delete()}}, { merge: true });
+       reciver_doc_ref.set({ "recived_requests" : {[this.state.search]: firebase.firestore.FieldValue.delete()}}, { merge: true });
+       this.setState({already_sent_request:false.id})
 
     }
 
@@ -92,14 +111,12 @@ export default class Add extends Component {
         console.log("IS sent!",reciver_id in doc_data.sent_requests)
         result = reciver_id in doc_data.sent_requests  
         console.log("result value", result)
-      
-        
-
+            
     } else {
         console.log("No such document!");
     }
     }).catch(function(error) {
-    console.log("Error getting document:", error);
+      console.log("Error getting document:", error);
     });
     
     return result
@@ -135,8 +152,6 @@ export default class Add extends Component {
 
     render(){
        
-
-       
         if (this.state.loading_search)
         {
             console.log("XXXXXX")
@@ -147,7 +162,6 @@ export default class Add extends Component {
                 onChangeText={query => {this.setState({search:query}, this.find_name)}}
                 onSubmitEditing={()=> {this.setState({loading_search:false}, this.check_status)}}
                 value={this.state.search}
-
                 /> 
             </View>
             ) 
@@ -158,8 +172,8 @@ export default class Add extends Component {
             return( <Text> User does not found!</Text>)
 
         }
-        console.log("already state", this.already_request_sent())
-        if(this.already_request_sent())
+        console.log("already state", this.state.already_sent_request)
+        if(this.state.already_sent_request)
         { return ( <View>
                    <Text> 
                     {this.state.reciver_name} is here! 

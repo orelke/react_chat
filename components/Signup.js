@@ -11,6 +11,9 @@ import {
 } from 'react-native';
 
 import Fire from '../Fire.js'
+import Utils from './Utils.js'
+import Consts from './Consts.js'
+
 
 export default class Signup extends React.Component {
 	state = {
@@ -27,7 +30,13 @@ export default class Signup extends React.Component {
 				email: this.state.email,
 				password: this.state.password
 			};
-			await Fire.createAccount(user);
+			var res = Utils.find(user.name, Consts.user_name_db_field, Consts.users_db);
+			if (res == null){
+				await Fire.createAccount(user);
+			}
+			else{
+				alert("user name exists!")
+			}
 		} catch ({ message }) {
 			console.log('create account failed. catch error:' + message);
 		}
